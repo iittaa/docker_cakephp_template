@@ -27,7 +27,7 @@ $ docker-compose up -d
 ### Enter PHP-FPM Container
 
 ```
-$ docker exec -it docker-cakephp3-template_phpfpm_1 /bin/sh
+$ docker-compose exec phpfpm /bin/sh
 ```
 
 
