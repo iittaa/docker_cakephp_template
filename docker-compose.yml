@@ -13,6 +13,24 @@ services:
       TZ: "Asia/Tokyo"
     ports:
       - "3307:3306"
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+    # コンテナと他のサービスを繋げる。
+    links:
+      - mysql
+    # ポートマッピング(ホスト:コンテナ)
+    ports:
+       - "8080:80"
+    # ?????
+    volumes:
+       - ./data/phpmyadmin/sessions:/sessions
+
   nginx:
     restart: always
     image: "nginx:mainline-alpine"
@@ -28,6 +46,7 @@ services:
       - phpfpm
     links:
       - phpfpm
+
   phpfpm:
     build: ./data/phpfpm/
     environment:
@@ -38,6 +57,7 @@ services:
       - mysql
     links:
       - mysql
+
   host:
     build: ./data/htdocs
     environment:
